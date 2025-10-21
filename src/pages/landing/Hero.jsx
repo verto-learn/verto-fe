@@ -10,9 +10,9 @@ export const Hero = () => {
                 <div className='flex gap-4 justify-center'>
                     <button className='hover:bg-secondary transition-all gap-x-2 hover:scale-110  duration-500 ease-in-out px-6 py-2 rounded-2xl border border-secondary flex items-center'>
                         Start Now
-                        <MoveUpRight size={20}/>
+                        <MoveUpRight size={15} />
                     </button>
-                    <button className='bg-light/10 rounded-xl px-6 py-2 text-secondary hover:scale-90 transition-all duration-500'>Try Demo</button>
+                    <button className='bg-light/10 rounded-xl px-6 py-2 text-light hover:scale-90 transition-all duration-500'>Try Demo</button>
                 </div>
             </div>
         </section>

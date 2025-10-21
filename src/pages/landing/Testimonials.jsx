@@ -1,4 +1,10 @@
 import React from 'react'
+import { TestimonialCard } from '../../components/ui/TestimonialCard'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 
 const Testimonials = () => {
 
@@ -16,41 +22,61 @@ const Testimonials = () => {
             feedback: "As an educator, Verto provides incredible tools to create dynamic and up-to-date course content effortlessly. It's a game-changer for curriculum development."
         },
         {
+            name: "John Doe",
+            role: "Educator",
+            avatar: "https://i.pravatar.cc/150?u=john-doe",
+            feedback: "As an educator, Verto provides incredible tools to create dynamic and up-to-date course content effortlessly. It's a game-changer for curriculum development."
+        },
+        {
+            name: "Noel Gallagher",
+            role: "Singer",
+            avatar: "https://i.pravatar.cc/150?u=noel-gallagher",
+            feedback: "As an educator, Verto provides incredible tools to create dynamic and up-to-date course content effortlessly. It's a game-changer for curriculum development."
+        },
+        {
             name: "Emily Johnson",
-            role: "Professional", 
+            role: "Professional",
             avatar: "https://i.pravatar.cc/150?u=emily-johnson",
             feedback: "The personalized learning paths on Verto have helped me acquire new skills quickly and efficiently. I was able to upskill for my career in just a few weeks."
         }
     ]
 
-  return (
-    <section className='min-h-screen flex justify-center items-center py-16 md:py-0'>
-        <div className='px-10 w-full max-w-6xl'>
-            <h1 className='font-semibold text-4xl mb-12 text-center'>What Our Users Say</h1>
-            <div className='grid md:grid-cols-3 gap-8'>
-                {testimonials.map((testimonial, index) => (
-                    <div 
-                        key={index} 
-                        className="bg-white/5 p-6 rounded-lg border border-white/20 hover:shadow-xl hover:shadow-secondary/30 transition-shadow duration-300 flex flex-col justify-between"
+    return (
+        <section className='min-h-screen flex justify-center items-center py-16 md:py-0'>
+            <div className='px-10 w-full max-w-6xl'>
+                <h1 className='font-semibold text-4xl mb-12 text-center'>What Our Users Say</h1>
+                <div className='w-full mx-auto'>
+                    <Swiper
+                        modules={[EffectCoverflow, Autoplay]}
+                        effect="coverflow"
+                        grabCursor={true}
+                        centeredSlides={true}
+                        slidesPerView={3}
+                        spaceBetween={40}
+                        loop={true}
+                        autoplay={{ delay: 3000 }}
+                        coverflowEffect={{
+                            rotate: 0,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 2.5,
+                            slideShadows: true,
+                        }}
+                        className="w-full"
                     >
-                        <p className="italic text-light/90 mb-6">"{testimonial.feedback}"</p>
-                        <div className="flex items-center mt-auto">
-                            <img 
-                                src={testimonial.avatar} 
-                                alt={`Avatar of ${testimonial.name}`}
-                                className="w-14 h-14 rounded-full mr-4 border-2 border-secondary/50"
-                            />
-                            <div>
-                                <h3 className="font-semibold text-lg">{testimonial.name}</h3>
-                                <span className="text-sm opacity-70">{testimonial.role}</span>
-                            </div>
-                        </div> 
-                    </div>   
-                ))}
+
+                        {testimonials.map((testimonial, index) => (
+                            <SwiperSlide key={index} >
+                                <div className="w-full">
+                                    <TestimonialCard testimonial={testimonial} />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
             </div>
-        </div>
-    </section>
-  )
+        </section>
+    )
 }
 
 export default Testimonials
