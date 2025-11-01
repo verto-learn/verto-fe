@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { LandingLayout } from "../layouts/LandingLayout";
 import Landing from "../pages/Landing";
+import { ChapterDetail } from "../pages/course/ChapterDetail";
 
 
 
@@ -14,5 +15,9 @@ export const router = createBrowserRouter([
                 element: <Landing />,
             }
         ]
+    },
+    {
+        path: "/chapter/:id",
+        element: <ChapterDetail />
     }
 ])
