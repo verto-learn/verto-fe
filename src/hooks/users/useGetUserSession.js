@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
-import { getUserCourse } from "../api/course/getUserCourse"
+import { useQuery } from "@tanstack/react-query";
+import { getUserSession } from "../../api/users/getUserSession";
 
-export const useGetUserCourse = () => {
+export const useGetUserSession = () => {
     const { data, isLoading, isError, error } = useQuery({
     queryKey: ["course"],
-    queryFn: getUserCourse,
+    queryFn: getUserSession,
     onError: (err) => {
       console.error("❌ Error fetching courses:", err);
     },

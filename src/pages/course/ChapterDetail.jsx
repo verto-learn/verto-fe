@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { MarkdownContent } from "../../components/course/MarkdownContent";
 import { ChapterList } from "../../components/course/ChapterList";
 import { ProgressBar } from "../../components/course/ProgressBar";
-import { useGetUserCourse } from "../../hooks/useGetUserCourse";
+import { useGetUserCourse } from "../../hooks/course/useGetUserCourse";
 
 export const ChapterDetail = () => {
     const { id } = useParams();
