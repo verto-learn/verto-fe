@@ -13,7 +13,7 @@ export const ChapterList = ({ chapters }) => {
           <div
             key={chapter.id}
             onClick={() => navigate(`/chapter/${chapter.id}`)}
-            className="flex items-center justify-between bg-gray-800 hover:bg-gray-700 transition rounded-xl p-4 cursor-pointer"
+            className="flex items-center justify-between glass-card hover:bg-gray-700 transition rounded-xl p-4 cursor-pointer"
           >
             <div className="flex items-center gap-3">
               {done ? (

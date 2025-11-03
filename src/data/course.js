@@ -11,7 +11,7 @@ export const course =  {
             title: "Mobile Back End Development",
             description: "This beginner-friendly course introduces the core concepts of mobile backend development. You'll learn how to design, build, and deploy server-side infrastructure that powers mobile applications. Topics covered include API design, database integration, user authentication, and cloud platform utilization. By the end, you'll have a foundational understanding of what it takes to create robust and scalable backends for your mobile apps.",
             topic_id: "cmek42hab0000lrb4ua16cz84",
-            difficulty: "beginner",
+            difficulty: "Beginner",
             generated_by: "b640e69a-1bd3-4053-bcad-71bb0342485f",
             created_at: "2025-08-21T01:31:54.308Z",
             updated_at: "2025-08-21T01:31:54.308Z",

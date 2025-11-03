@@ -4,6 +4,9 @@ import Landing from "../pages/Landing";
 import { ChapterDetail } from "../pages/course/ChapterDetail";
 import { UserDashboard } from "../layouts/UserDashboard";
 import Profile from "../pages/users/Profile";
+import { CourseLayout } from "../layouts/CourseLayout";
+import Course from "../pages/course/Course";
+import { ChapterLayout } from "../layouts/ChapterLayout";
 
 
 
@@ -29,7 +32,23 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path: "/chapter/:id",
-        element: <ChapterDetail />
+        path: "/courses",
+        element: <CourseLayout />,
+        children: [
+            {
+                path: "overview",
+                element: <Course />,
+            }
+        ]
+    },
+    {
+        path: "/chapter",
+        element: <ChapterLayout />,
+        children: [
+            {
+                path: ":id",
+                element: <ChapterDetail />,
+            }
+        ]
     }
 ])
