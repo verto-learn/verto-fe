@@ -7,6 +7,9 @@ import Profile from "../pages/users/Profile";
 import { CourseLayout } from "../layouts/CourseLayout";
 import Course from "../pages/course/Course";
 import { ChapterLayout } from "../layouts/ChapterLayout";
+import { AuthLayout } from "../layouts/AuthLayout";
+import Login from "../pages/authentication/Login";
+import Register from "../pages/authentication/Register";
 
 
 
@@ -19,6 +22,20 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <Landing />,
             }
+        ]
+    },
+    {
+        path: "/authenticate",
+        element: <AuthLayout />,
+        children: [
+            {
+                path: "login",
+                element: <Login />,
+            },
+            {
+                path: "register",
+                element: <Register />,
+            },
         ]
     },
     {
