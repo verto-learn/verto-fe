@@ -1,29 +1,78 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github-dark.css"; // Anda bisa ganti gaya lain seperti "atom-one-dark.css"
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export const MarkdownContent = ({ content }) => {
+export default function MarkdownContent({ content }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (code) => {
+    navigator.clipboard.writeText(code).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
-    <article
-      className="
-        prose prose-invert max-w-none text-justify
-        prose-headings:font-semibold prose-headings:text-white
-        prose-h1:text-3xl prose-h1:mb-4 prose-h1:border-b prose-h1:border-gray-700 prose-h1:pb-2
-        prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-3 prose-h2:text-accent
-        prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-2
-        prose-p:text-gray-300 prose-p:leading-relaxed prose-p:my-3
-        prose-strong:text-white prose-code:text-accent prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-        prose-pre:bg-[#111827] prose-pre:rounded-xl prose-pre:p-4 prose-pre:my-6 prose-pre:border prose-pre:border-gray-700
-        prose-li:my-1 prose-li:text-gray-300
-        prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-4 prose-blockquote:text-gray-400 prose-blockquote:italic
-        prose-img:rounded-xl prose-img:shadow-lg prose-img:my-6
-        prose-a:text-cyan-400 prose-a:underline hover:prose-a:text-cyan-300
-      "
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        h1: ({ node, ...props }) => (
+          <h1 className="text-3xl font-bold mb-4 text-dark" {...props} />
+        ),
+        h2: ({ node, ...props }) => (
+          <h2 className="text-2xl font-semibold mb-3 text-dark" {...props} />
+        ),
+        h3: ({ node, ...props }) => (
+          <h3 className="text-xl font-semibold mb-2 text-dark" {...props} />
+        ),
+        p: ({ node, ...props }) => (
+          <p className="text-dark mb-4 leading-relaxed" {...props} />
+        ),
+        ul: ({ node, ...props }) => (
+          <ul className="list-disc list-inside mb-4 text-dark" {...props} />
+        ),
+        li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+        code({ inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || "");
+          const codeString = String(children).replace(/\n$/, "");
+          const lang = match ? match[1] : "text";
+
+          return !inline && match ? (
+            <div className="my-4 rounded-md overflow-hidden shadow-lg">
+              {/* Header */}
+              <div className="flex justify-between items-center bg-gray-900 text-gray-200 px-4 py-2 text-sm font-mono">
+                <span className="capitalize">{lang}</span>
+                <button
+                  onClick={() => handleCopy(codeString)}
+                  className="text-xs bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded"
+                >
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+              </div>
+
+              {/* Code Block */}
+              <SyntaxHighlighter
+                style={oneDark}
+                language={lang}
+                PreTag="div"
+                className="rounded-b-md !m-0"
+                {...props}
+              >
+                {codeString}
+              </SyntaxHighlighter>
+            </div>
+          ) : (
+            <code className="bg-gray-800 text-pink-400 px-1 py-0.5 rounded" {...props}>
+              {children}
+            </code>
+          );
+        },
+      }}
     >
-      <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-        {content}
-      </ReactMarkdown>
-    </article>
+      {content}
+    </ReactMarkdown>
   );
-};
+}

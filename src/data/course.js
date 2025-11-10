@@ -1,4 +1,4 @@
-export const course =  {
+export const course = {
     status: "success",
     message: "Success get course!",
     data: {

@@ -10,6 +10,8 @@ import { ChapterLayout } from "../layouts/ChapterLayout";
 import { AuthLayout } from "../layouts/AuthLayout";
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
+import { AdminDashboard } from "../layouts/AdminDashboard";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 
 
@@ -39,12 +41,32 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path: "/users",
-        element: <UserDashboard />,
+        element: <ProtectedRoutes allowedRoles={["user"]} />,
         children: [
             {
-                path: "profile",
-                element: <Profile />,
+                path: "/users",
+                element: <UserDashboard />,
+                children: [
+                    {
+                        path: "profile",
+                        element: <Profile />
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        element: <ProtectedRoutes allowedRoles={["admin"]} />,
+        children: [
+            {
+                path: "/admin",
+                element: <AdminDashboard />,
+                children: [
+                    {
+                        path: "profile",
+                        element: <Profile />
+                    }
+                ]
             }
         ]
     },

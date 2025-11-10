@@ -2,6 +2,7 @@ import React from "react";
 import { useGetUserSession } from "../../hooks/users/useGetUserSession";
 import { Book, CircleUser, Shield, CalendarDays } from "lucide-react";
 import { ProfileInfoCard } from "../../components/ui/ProfileInfoCard";
+import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 
 
 const Profile = () => {
@@ -17,7 +18,7 @@ const Profile = () => {
     });
   };
 
-  if (isLoading) return <p className="p-6">Loading...</p>;
+  if (isLoading) return <LoadingSpinner size="lg" color="text-indigo-600" />;
   if (isError) return <p className="p-6 text-red-500">Error loading user data.</p>;
 
   return (

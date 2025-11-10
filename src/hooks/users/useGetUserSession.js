@@ -3,7 +3,7 @@ import { getUserSession } from "../../api/users/getUserSession";
 
 export const useGetUserSession = () => {
     const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["course"],
+    queryKey: ["user"],
     queryFn: getUserSession,
     onError: (err) => {
       console.error("❌ Error fetching courses:", err);

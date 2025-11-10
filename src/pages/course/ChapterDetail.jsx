@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
-import { MarkdownContent } from "../../components/course/MarkdownContent";
 import { ChapterList } from "../../components/course/ChapterList";
 import { ProgressBar } from "../../components/course/ProgressBar";
 import { useGetUserCourse } from "../../hooks/course/useGetUserCourse";
+import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
+import { section } from "framer-motion/client";
+import MarkdownContent from "../../components/course/MarkdownContent";
 
 export const ChapterDetail = () => {
   const { id } = useParams();
@@ -12,7 +14,7 @@ export const ChapterDetail = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   if (isLoading)
-    return <p className="text-center text-gray-400 mt-10">Memuat data course...</p>;
+    return <LoadingSpinner size="lg" color="text-indigo-600" />;
 
   if (isError) {
     console.error(error);
@@ -28,7 +30,6 @@ export const ChapterDetail = () => {
 
   return (
     <div className="relative min-h-screen flex bg-primary/50 text-white">
-      {/* MAIN CONTENT */}
       <div
         className={`flex-1 transition-all duration-500 ${
           isSidebarOpen ? "md:mr-96" : "md:mr-20"
@@ -54,14 +55,12 @@ export const ChapterDetail = () => {
         </div>
       </div>
 
-      {/* SIDEBAR */}
       <aside
         className={`fixed right-0 top-0 h-full bg-primary/70 backdrop-blur-lg border-l border-gray-700 shadow-xl transition-all duration-500 ease-in-out z-20 ${
           isSidebarOpen ? "w-96" : "w-20"
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* Header + Toggle */}
           <div className="flex items-center justify-between px-4 py-4 border-b border-gray-700">
             <div className="flex items-center gap-2">
               {isSidebarOpen && <h2 className="font-semibold">Course Progress</h2>}

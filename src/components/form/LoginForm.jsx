@@ -49,13 +49,13 @@ const LoginForm = () => {
       <button
         type="submit"
         disabled={isPending}
-        className={`w-full py-3 rounded-lg font-medium text-white transition ${
+        className={`w-full hover:bg-secondary  transition-all   duration-500 ease-in-out px-6 py-2 rounded-lg border border-secondary flex justify-center items-center ${
           isPending
             ? "bg-gray-600 cursor-not-allowed"
             : "bg-accent hover:bg-accent/80"
         }`}
       >
-        {isPending ? "Registering..." : "Register"}
+        {isPending ? "Logging In..." : "Login"}
       </button>
 
       <p className="text-center text-gray-400 text-sm">
