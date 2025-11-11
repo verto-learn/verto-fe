@@ -3,8 +3,9 @@ export const ENDPOINT = {
     REGISTER: '/user/register',
     LOGOUT: '/user/logout',
     SESSION: '/user/session',
+    QUIZ: '/quiz',
     COURSE: '/courses',
-    TOPICS: '/topics',
+    TOPICS: '/topic',
     PROFILE: '/profile',
     PASSWORD: '/user/change-password',
 };

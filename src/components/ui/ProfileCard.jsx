@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { useGetUserSession } from "../../hooks/users/useGetUserSession";
 import { CircleUser, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../hooks/auth/useLogout";
 
 const ProfileCard = () => {
   const { data, isLoading, isError, error } = useGetUserSession();
+  const { mutate: logout } = useLogout();
   const users = data?.data?.user;
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ const ProfileCard = () => {
     );
 
   const handleLogout = () => {
-
+    logout();
     navigate("/authenticate/login");
   };
 

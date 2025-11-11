@@ -12,6 +12,8 @@ import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 import { AdminDashboard } from "../layouts/AdminDashboard";
 import ProtectedRoutes from "./ProtectedRoutes";
+import UserCourse from "../pages/course/UserCourse";
+import Quiz from "../pages/quiz/Quiz";
 
 
 
@@ -23,7 +25,8 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Landing />,
-            }
+            },
+            
         ]
     },
     {
@@ -38,6 +41,10 @@ export const router = createBrowserRouter([
                 path: "register",
                 element: <Register />,
             },
+            {
+                path: "quiz",
+                element: <Quiz />,
+            }
         ]
     },
     {
@@ -50,7 +57,11 @@ export const router = createBrowserRouter([
                     {
                         path: "profile",
                         element: <Profile />
-                    }
+                    },
+                    {
+                        path: "courses",
+                        element: <UserCourse />
+                    },
                 ]
             }
         ]

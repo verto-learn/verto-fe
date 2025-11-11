@@ -20,8 +20,8 @@ export const SidebarAdmin = () => {
 
   const navItems = [
     {
-      label: "Profile",
-      href: "/admin/profile",
+      label: "Analytics",
+      href: "/admin/analytics",
       icon: <CircleUser size={20} />,
     },
     { label: "Search", 

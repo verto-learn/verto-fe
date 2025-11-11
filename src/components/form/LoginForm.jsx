@@ -4,17 +4,7 @@ import InputField from "./InputField";
 import { useLogin } from "../../hooks/auth/useLogin";
 
 const LoginForm = () => {
-  const { mutate, isPending } = useLogin();
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      mutate(values);
-    },
-  });
+  const { formik, isPending } = useLogin();
 
   return (
     <form

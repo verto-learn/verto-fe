@@ -5,18 +5,9 @@ import { useRegister } from "../../hooks/auth/useRegister";
 import InputField from "./InputField";
 
 const RegisterForm = () => {
-  const { mutate, isPending } = useRegister();
+  const { formik, isPending } = useRegister();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      mutate(values);
-    },
-  });
+
 
   return (
     <form
@@ -31,9 +22,9 @@ const RegisterForm = () => {
       </div>
 
       <InputField
-        label="Username"
-        name="username"
-        placeholder="Enter username"
+        label="Full Name"
+        name="full_name"
+        placeholder="Enter Full Name"
         value={formik.values.username}
         onChange={formik.handleChange}
       />
