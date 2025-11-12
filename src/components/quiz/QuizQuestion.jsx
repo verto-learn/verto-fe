@@ -15,15 +15,16 @@ export const QuizQuestion = ({ question, index, onAnswer }) => {
       animate={{ opacity: 1, y: 0 }}
       className="bg-primary text-light p-6 rounded-2xl shadow-lg w-full max-w-2xl mx-auto"
     >
-      <h3 className="text-lg font-semibold mb-4">
+      <h3 className="text-lg font-semibold">
         {index + 1}. {question.question_text}
       </h3>
+      <p className="text-accent mb-4">Level: {question.level}</p>
       <div className="flex flex-col gap-3">
         {question.options.map((opt, i) => (
           <button
             key={i}
             onClick={() => handleSelect(opt, i)}
-            className={`p-3 rounded-xl text-left border transition-all ${selected === opt
+            className={`p-3 rounded-2xl text-left  transition-all ${selected === opt
                 ? "bg-accent text-white"
                 : "bg-third hover:bg-accent/40"
               }`}

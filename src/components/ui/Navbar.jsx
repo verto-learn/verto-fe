@@ -61,12 +61,18 @@ const Navbar = () => {
           {isLoading ? (
             <p className="text-gray-300 text-sm">Loading...</p>
           ) : isError ? (
-            <p className="text-red-500 text-sm">Error</p>
+            <Link
+              to="/login"
+              className="relative px-5 py-2 rounded-lg border border-secondary text-secondary text-sm font-medium
+              hover:bg-secondary hover:text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_15px_rgba(67,0,255,0.6)]"
+            >
+              Login
+            </Link>
           ) : user ? (
             <ProfileCard />
           ) : (
             <Link
-              to="/login"
+              to="/authenticate/login"
               className="relative px-5 py-2 rounded-lg border border-secondary text-secondary text-sm font-medium
               hover:bg-secondary hover:text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_15px_rgba(67,0,255,0.6)]"
             >

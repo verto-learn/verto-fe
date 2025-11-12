@@ -6,6 +6,8 @@ import { QuizSummary } from "../../components/quiz/QuizSummary";
 import { useTopic } from "../../hooks/topic/useTopic";
 import { useQuiz } from "../../hooks/quiz/useQuiz";
 import { useSubmitQuiz } from "../../hooks/quiz/useSubmitQuiz";
+import { SendHorizontal } from "lucide-react";
+import { useGenerateCourse } from "../../hooks/course/useGenerateCourse";
 
 const Quiz = () => {
   const { data, isLoading: isLoadingTopics } = useTopic();
@@ -25,6 +27,7 @@ const Quiz = () => {
 
   const summary = result?.data;
 
+  const { formik: generateFormik, isPending: isGenerating } = useGenerateCourse();
 
   const handleSelectTopic = (id) => {
     setSelectedTopic(id);
@@ -46,6 +49,15 @@ const Quiz = () => {
 
   const handleSubmit = () => formik.handleSubmit();
 
+    const handleNext = () => {
+    generateFormik.setValues({
+      topic_id: selectedTopic,
+      difficulty: summary.calculated_difficulty,
+    });
+    generateFormik.handleSubmit();
+  };
+
+
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-light p-6 overflow-hidden relative">
       <AnimatePresence mode="wait">
@@ -64,6 +76,7 @@ const Quiz = () => {
               onChange={handleSelectTopic}
             />
           </motion.div>
+
         )}
 
         {/* STEP 2: LOADING QUIZ */}
@@ -81,7 +94,7 @@ const Quiz = () => {
         )}
 
         {/* STEP 3: QUIZ MUNCUL */}
-        {quizData && !isSubmitted && (
+        {isTopicSelected && !isLoadingQuiz && quizData && !isSubmitted && (
           <motion.div
             key="quiz"
             initial={{ opacity: 0, y: 30 }}
@@ -97,15 +110,17 @@ const Quiz = () => {
                 index={i}
                 onAnswer={handleAnswer}
               />
+              
             ))}
-
-            <button
+           <button
               onClick={handleSubmit}
               disabled={isPending}
-              className="mt-6 bg-accent px-6 py-3 rounded-xl hover:bg-secondary transition disabled:opacity-50"
+              className="mt-6 bg-accent flex items-center justify-center py-3 gap-x-2 rounded-xl hover:bg-secondary transition disabled:opacity-50"
             >
-              {isPending ? "Mengirim..." : "Submit Quiz"}
+              {isPending ? "Sending..." : "Submit"}
+              <SendHorizontal />
             </button>
+           
           </motion.div>
         )}
 
@@ -122,12 +137,7 @@ const Quiz = () => {
               score={summary.score}
               total={summary.total}
               difficulty={summary.calculated_difficulty}
-              onNext={() =>
-                console.log("Next:", {
-                  topic_id: selectedTopic,
-                  difficulty: result.calculated_difficulty,
-                })
-              }
+              onNext={handleNext}
             />
           </motion.div>
         )}
