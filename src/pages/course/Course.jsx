@@ -18,8 +18,9 @@ const Course = () => {
   }
 
 
-  const course = data?.data?.course;
-  console.log("Fetched course data:", course);
+  const course = data?.data?.[0]?.course;
+
+  console.log("Fetched course data:", data);
 
   if (!course) {
     return <p className="p-6">Data kursus tidak ditemukan.</p>;

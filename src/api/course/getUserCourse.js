@@ -1,6 +1,7 @@
-import { course } from "../../data/course"
+import axiosInstance from "../axiosInstance"
+import { ENDPOINT } from "../endpoint"
 
 export const getUserCourse = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    return course
+   const response = await axiosInstance.get(`${ENDPOINT.COURSE}`)
+   return response.data
 }

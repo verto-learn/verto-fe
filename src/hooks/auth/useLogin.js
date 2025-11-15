@@ -20,8 +20,8 @@ export const useLogin = () => {
         return navigate("/admin/profile");
       }
 
-      if (selectedCourse) {
-        return navigate("/users/course");
+      if (!selectedCourse) {
+        return navigate("/authenticate/quiz");
       }
 
       return navigate(`/users/profile`);

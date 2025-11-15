@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { generateCourse } from "../../api/course/generateCourse";
 
 export const useGenerateCourse = () => {
@@ -23,10 +24,10 @@ export const useGenerateCourse = () => {
         onSuccess: () => {
             console.log("Course generated successfully!");
             formik.handleReset();
-            navigate('/courses/overview');
+            setTimeout(() => navigate('/courses/overview'), 500); // delay 0.5s biar smooth
         }
 
     })
-    
+
     return { formik, isPending };
 }

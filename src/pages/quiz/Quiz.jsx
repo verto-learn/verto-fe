@@ -49,7 +49,7 @@ const Quiz = () => {
 
   const handleSubmit = () => formik.handleSubmit();
 
-    const handleNext = () => {
+  const handleNext = () => {
     generateFormik.setValues({
       topic_id: selectedTopic,
       difficulty: summary.calculated_difficulty,
@@ -110,9 +110,9 @@ const Quiz = () => {
                 index={i}
                 onAnswer={handleAnswer}
               />
-              
+
             ))}
-           <button
+            <button
               onClick={handleSubmit}
               disabled={isPending}
               className="mt-6 bg-accent flex items-center justify-center py-3 gap-x-2 rounded-xl hover:bg-secondary transition disabled:opacity-50"
@@ -120,11 +120,10 @@ const Quiz = () => {
               {isPending ? "Sending..." : "Submit"}
               <SendHorizontal />
             </button>
-           
+
           </motion.div>
         )}
 
-        {/* STEP 4: HASIL QUIZ */}
         {isSubmitted && result && (
           <motion.div
             key="result"
@@ -138,6 +137,7 @@ const Quiz = () => {
               total={summary.total}
               difficulty={summary.calculated_difficulty}
               onNext={handleNext}
+              isLoading={isGenerating} // ✅ dikirim ke QuizSummary
             />
           </motion.div>
         )}

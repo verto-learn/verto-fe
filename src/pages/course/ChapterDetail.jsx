@@ -9,21 +9,27 @@ import { section } from "framer-motion/client";
 import MarkdownContent from "../../components/course/MarkdownContent";
 
 export const ChapterDetail = () => {
-  const { id } = useParams();
-  const { data, isLoading, isError, error } = useGetUserCourse();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+const { id } = useParams();
+const { data, isLoading, isError, error } = useGetUserCourse();
+const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  if (isLoading)
-    return <LoadingSpinner size="lg" color="text-indigo-600" />;
+if (isLoading)
+  return <LoadingSpinner size="lg" color="text-indigo-600" />;
 
-  if (isError) {
-    console.error(error);
-    return <p className="text-center text-red-400 mt-10">Gagal memuat data course.</p>;
-  }
+if (isError) {
+  console.error(error);
+  return <p className="text-center text-red-400 mt-10">Gagal memuat data course.</p>;
+}
 
-  const chapters = data?.data?.course?.chapters || [];
-  const chapter = chapters.find((c) => c.id === id);
-  const completedCount = chapters.filter((c) => c.progress?.[0]?.is_done).length;
+const course = data?.data?.[0]?.course;
+const chapters = course?.chapters || [];
+
+const chapter = chapters.find((c) => c.id === id);
+const completedCount = chapters.filter((c) => c.progress?.[0]?.is_done).length;
+
+if (!chapter)
+  return <div className="text-center text-red-400 mt-10">Chapter tidak ditemukan.</div>;
+
 
   if (!chapter)
     return <div className="text-center text-red-400 mt-10">Chapter tidak ditemukan.</div>;

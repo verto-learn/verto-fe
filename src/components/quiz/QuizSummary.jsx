@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { Sparkles } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 
-export const QuizSummary = ({ score, total, difficulty, onNext }) => {
+export const QuizSummary = ({ score, total, difficulty, onNext, isLoading }) => {
   return (
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
@@ -23,10 +23,20 @@ export const QuizSummary = ({ score, total, difficulty, onNext }) => {
       </table>
       <button
         onClick={onNext}
-        className="flex items-center gap-x-4 mt-4 px-6 py-3 bg-accent rounded-xl hover:bg-secondary transition"
+        disabled={isLoading}
+        className="flex items-center justify-center gap-x-3 mt-4 px-6 py-3 bg-accent rounded-xl hover:bg-secondary transition disabled:opacity-50"
       >
-        <Sparkles />
-        Generate Your Course
+        {isLoading ? (
+          <>
+            <Loader2 className="animate-spin" />
+            <span>Generating...</span>
+          </>
+        ) : (
+          <>
+            <Sparkles />
+            <span>Generate Your Course</span>
+          </>
+        )}
       </button>
     </motion.div>
   );

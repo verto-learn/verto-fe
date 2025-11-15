@@ -14,6 +14,7 @@ import { AdminDashboard } from "../layouts/AdminDashboard";
 import ProtectedRoutes from "./ProtectedRoutes";
 import UserCourse from "../pages/course/UserCourse";
 import Quiz from "../pages/quiz/Quiz";
+import { Simulator } from "../pages/Simulator";
 
 
 
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <Landing />,
             },
+            {
+                path: "/simulation",
+                element: <Simulator />,
+            }
             
         ]
     },

@@ -58,7 +58,7 @@ export const Footer = () => {
 
       {/* Footer bottom */}
       <div className="relative z-10 border-t border-light/10 mt-10 pt-4 text-center text-sm text-light/70">
-        © {new Date().getFullYear()} MyCourse. Semua hak cipta dilindungi.
+        © {new Date().getFullYear()} Verto. Semua hak cipta dilindungi.
       </div>
     </footer>
   );
