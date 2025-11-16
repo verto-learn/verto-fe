@@ -10,6 +10,7 @@ export const ChapterList = ({ chapters }) => {
       {chapters.map((chapter, index) => {
         const done = chapter.progress?.[0]?.is_done;
         const isActive = chapter.is_active;
+        console.log("Rendering chapter:", chapter.title, "isActive:", isActive, "done:", done);
 
         
         if (!isActive) {

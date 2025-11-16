@@ -12,7 +12,7 @@ import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 import { AdminDashboard } from "../layouts/AdminDashboard";
 import ProtectedRoutes from "./ProtectedRoutes";
-import UserCourse from "../pages/course/UserCourse";
+import UserCourse from "../pages/users/UserCourse";
 import Quiz from "../pages/quiz/Quiz";
 import { Simulator } from "../pages/Simulator";
 
@@ -91,7 +91,7 @@ export const router = createBrowserRouter([
         element: <CourseLayout />,
         children: [
             {
-                path: "overview",
+                path: ":id",
                 element: <Course />,
             }
         ]

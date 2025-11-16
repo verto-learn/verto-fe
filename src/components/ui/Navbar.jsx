@@ -63,8 +63,8 @@ const Navbar = () => {
           ) : isError ? (
             <Link
               to="/authenticate/login"
-              className="relative px-5 py-2 rounded-lg border border-secondary text-secondary text-sm font-medium
-              hover:bg-secondary hover:text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_15px_rgba(67,0,255,0.6)]"
+              className="relative px-5 py-2 rounded-lg bg-secondary text-light border border-secondary  text-sm font-medium
+              hover:bg-transparent hover:text-white transition-all duration-500 ease-in-out hover:shadow-[0_0_15px_rgba(67,0,255,0.6)]"
             >
               Login
             </Link>

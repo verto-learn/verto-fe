@@ -3,10 +3,13 @@ import { useGetUserSession } from "../../hooks/users/useGetUserSession";
 import { Book, CircleUser, Shield, CalendarDays } from "lucide-react";
 import { ProfileInfoCard } from "../../components/ui/ProfileInfoCard";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
+import { useGetUserCourse } from "../../hooks/course/useGetUserCourse";
+import CourseCard from "../../components/course/CourseCard";
 
 
 const Profile = () => {
   const { data, isLoading, isError } = useGetUserSession();
+  const { data: course, isLoading: isCourseLoading } = useGetUserCourse();
   const users = data?.data?.user;
 
   const formatDate = (dateString) => {
@@ -41,12 +44,12 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* User Info Cards */}
+
       <div className="glass-card px-8 py-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <ProfileInfoCard
           icon={Book}
-          title="Selected Course"
-          value={users?.selected_course}
+          title="Role"
+          value={users?.role ?? "N/A"}
           gradient="from-secondary to-pink-500"
         />
         <ProfileInfoCard
@@ -55,6 +58,24 @@ const Profile = () => {
           value={formatDate(users?.created_at)}
           gradient="from-fuchsia-600 to-purple-500"
         />
+      </div>
+
+      <div className="mt-6">
+        <h2 className="text-white text-xl font-semibold mb-4">Your Courses</h2>
+
+        {isCourseLoading ? (
+          <LoadingSpinner size="md" color="text-indigo-600" />
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {course?.data && course.data.length > 0 ? (
+              course.data.map((item) => (
+                <CourseCard key={item.course.id} item={item} />
+              ))
+            ) : (
+              <p className="text-gray-400">You don't have any generated courses yet.</p>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

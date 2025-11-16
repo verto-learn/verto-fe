@@ -24,7 +24,7 @@ export const QuizSummary = ({ score, total, difficulty, onNext, isLoading }) => 
       <button
         onClick={onNext}
         disabled={isLoading}
-        className="flex items-center justify-center gap-x-3 mt-4 px-6 py-3 bg-accent rounded-xl hover:bg-secondary transition disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-x-3 mt-4 px-6 py-3 bg-accent rounded-xl hover:bg-secondary transition disabled:opacity-50"
       >
         {isLoading ? (
           <>
