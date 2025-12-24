@@ -10,7 +10,7 @@ export const useGenerateCourse = () => {
     const formik = useFormik({
         initialValues: {
             topic_id: "",
-            difficulty: "",
+            difficulty: "beginner",
         },
         onSubmit: (values) => {
             mutate(values);
@@ -38,14 +38,14 @@ export const useGenerateCourse = () => {
                 transition: Bounce,
             });
             formik.handleReset();
-            const courseId = data?.data?.id;
-            queryClient.invalidateQueries(["course"]);
+            // const courseId = data?.data?.id;
+            // queryClient.invalidateQueries(["course"]);
 
-            if (courseId) {
-                setTimeout(() => navigate(`/courses/${courseId}`), 500);
-            } else {
-                setTimeout(() => navigate(`/courses/${courseId}`), 500);
-            }
+            // if (courseId) {
+            //     setTimeout(() => navigate(`/courses/${courseId}`), 500);
+            // } else {
+            //     setTimeout(() => navigate(`/courses/${courseId}`), 500);
+            // }
         }
 
     })

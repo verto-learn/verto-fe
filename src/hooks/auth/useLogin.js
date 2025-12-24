@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/auth/login";
@@ -7,6 +7,7 @@ import { Bounce, toast } from "react-toastify";
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
     mutationFn: (body) => login(body),
@@ -25,6 +26,11 @@ export const useLogin = () => {
       });
     },
     onSuccess: (res) => {
+      // If the login response includes user data, set it into the query cache so components don't refetch
+      if (res?.data?.user) {
+        queryClient.setQueryData(["user"], { data: { user: res.data.user } });
+      }
+
       const role = res?.data?.role;
       const selectedCourse = res?.data?.selected_courses;
 

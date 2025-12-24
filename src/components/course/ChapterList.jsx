@@ -8,11 +8,9 @@ export const ChapterList = ({ chapters }) => {
   return (
     <div className="space-y-3">
       {chapters.map((chapter, index) => {
-        const done = chapter.progress?.[0]?.is_done;
+        const done = chapter?.is_done;
         const isActive = chapter.is_active;
-        console.log("Rendering chapter:", chapter.title, "isActive:", isActive, "done:", done);
 
-        
         if (!isActive) {
           return (
             <div

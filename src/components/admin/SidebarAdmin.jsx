@@ -10,6 +10,7 @@ import {
   Search,
   MessageSquare,
   CircleUser,
+  GraduationCap,
 } from "lucide-react";
 
 
@@ -20,17 +21,22 @@ export const SidebarAdmin = () => {
 
   const navItems = [
     {
-      label: "Analytics",
-      href: "/admin/analytics",
+      label: "Profile",
+      href: "/admin/profile",
       icon: <CircleUser size={20} />,
     },
-    { label: "Search", 
-      href: "/admin/search", 
+    { label: "User Analytics", 
+      href: "/admin/analytics", 
       icon: <Search size={20} /> },
     {
-      label: "Course",
+      label: "Generate Course",
       href: "/admin/courses",
       icon: <BookOpen size={20} />,
+    },
+    {
+      label: "Create Topics",
+      href: "/admin/topics",
+      icon: <GraduationCap  size={20} />,
     },
     { label: "Settings", href: "/users/settings", icon: <Settings size={20} /> },
   ];

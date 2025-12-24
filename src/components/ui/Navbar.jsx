@@ -69,7 +69,7 @@ const Navbar = () => {
               Login
             </Link>
           ) : user ? (
-            <ProfileCard />
+            <ProfileCard user={user} />
           ) : (
             <Link
               to="/authenticate/login"
@@ -132,7 +132,7 @@ const Navbar = () => {
             ) : isError ? (
               <p className="text-red-500 text-sm">Error: {error.message}</p>
             ) : user ? (
-              <ProfileCard />
+              <ProfileCard user={user} />
             ) : (
               <Link
                 to="/login"

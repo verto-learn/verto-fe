@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetUserCourse } from "../../hooks/course/useGetUserCourse";
 import { useSearchParams, useParams } from "react-router-dom";
-import { useGetCourseDetail } from "../../hooks/course/useGetCourseDetail";
 import { ProgressBar } from "../../components/course/ProgressBar";
 import { ChapterList } from "../../components/course/ChapterList";
 import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
@@ -11,54 +10,40 @@ const Course = () => {
 
   const [searchParams] = useSearchParams();
   const selectedCourseId = searchParams.get("course_id");
-  const params = useParams();
-  const routeCourseId = params.id;
+  const { id: routeCourseId } = useParams();
 
+  if (isLoading) return <LoadingSpinner size="lg" color="text-indigo-600" />;
+  if (isError) return <p className="p-6 text-red-500">Error: {error.message}</p>;
 
-  const {
-    data: detailData,
-    isLoading: detailLoading,
-    isError: detailError,
-    error: detailErrorObj,
-  } = useGetCourseDetail(routeCourseId);
+  const coursesArray = data?.data ?? [];
 
+  // 🔥 SELALU ambil dari user course
+  let courseWrapper = null;
 
   if (routeCourseId) {
-    if (detailLoading) return <LoadingSpinner size="lg" color="text-indigo-600" />;
-    if (detailError) return <p className="p-6 text-red-500">Error: {detailErrorObj.message}</p>;
+    courseWrapper = coursesArray.find(
+      (c) => c.course?.id === routeCourseId
+    );
+  } else if (selectedCourseId) {
+    courseWrapper = coursesArray.find(
+      (c) => c.course?.id === selectedCourseId
+    );
   } else {
-    if (isLoading) {
-      return <LoadingSpinner size="lg" color="text-indigo-600" />;
-    }
+    courseWrapper = coursesArray[0];
+  }
 
-    if (isError) {
-      return <p className="p-6 text-red-500">Error: {error.message}</p>;
-    }
-  }
- 
-  let course = null;
-  if (routeCourseId) {
-    course = detailData?.data ?? null;
-  } else {
-    const coursesArray = data?.data ?? [];
-    if (selectedCourseId) {
-      const found = coursesArray.find((c) => c.course?.id === selectedCourseId);
-      course = found?.course ?? coursesArray?.[0]?.course ?? null;
-    } else {
-      course = coursesArray?.[0]?.course ?? null;
-    }
-  }
+  const course = courseWrapper?.course;
 
   if (!course) {
     return <p className="p-6">Data kursus tidak ditemukan.</p>;
   }
 
   const chapters = course.chapters || [];
+
+  // ✅ progress sudah pasti ada
   const completedCount = chapters.filter(
-    (c) => c.progress?.[0]?.is_done
+    (c) => c.progress?.[0]?.is_done === true
   ).length;
-
-
 
   return (
     <section className="min-h-screen">
@@ -66,19 +51,17 @@ const Course = () => {
         <h1 className="text-white text-3xl font-bold text-center">
           {course.title}
         </h1>
-        <div className="bg-accent w-20 mt-5 h-1 mx-auto flex items-center justify-center"></div>
+        <div className="bg-accent w-20 mt-5 h-1 mx-auto"></div>
       </div>
 
       <div className="bg-primary/50 rounded-lg p-8 m-4 shadow-lg">
-        <h1 className="text-white text-xl font-bold text-left">
+        <h1 className="text-white text-xl font-bold">
           Difficulty: <span className="font-thin">{course.difficulty}</span>
         </h1>
       </div>
 
       <div className="bg-primary/50 rounded-lg p-8 m-4 shadow-lg">
-        <h1 className="text-white text-xl font-bold text-left">
-          Description:
-        </h1>
+        <h1 className="text-white text-xl font-bold">Description:</h1>
         <p className="font-thin text-justify">{course.description}</p>
       </div>
 

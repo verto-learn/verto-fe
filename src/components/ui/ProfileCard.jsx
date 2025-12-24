@@ -4,14 +4,18 @@ import { CircleUser, LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/auth/useLogout";
 
-const ProfileCard = () => {
-  const { data, isLoading, isError, error } = useGetUserSession();
+const ProfileCard = ({ user: userProp }) => {
+  // disable fetching when a user prop is passed (avoid duplicate requests)
+  const { data, isLoading, isError, error } = useGetUserSession({ enabled: !userProp });
   const { mutate: logout } = useLogout();
-  const users = data?.data?.user;
+  const users = userProp ?? data?.data?.user;
+  const is_admin = users?.role === "admin";
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  
 
 
   useEffect(() => {
@@ -24,13 +28,17 @@ const ProfileCard = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError)
-    return (
-      <p className="p-6 text-red-500">
-        Error loading profile data: {error.message}
-      </p>
-    );
+  // If we don't have a user yet, show loading/error only when the hook is active
+  if (!users) {
+    if (isLoading) return <p>Loading...</p>;
+    if (isError)
+      return (
+        <p className="p-6 text-red-500">
+          Error loading profile data: {error.message}
+        </p>
+      );
+    return null;
+  }
 
   const handleLogout = () => {
     logout();
@@ -55,7 +63,13 @@ const ProfileCard = () => {
           </div>
 
           <button
-            onClick={() => navigate("/users/profile")}
+            onClick={() => {
+              if (is_admin) {
+                navigate("/admin/profile");
+              } else {
+                navigate("/users/profile");
+              }
+            }}
             className="w-full flex items-center gap-2 px-4 py-2 hover:bg-accent/40 text-left "
           >
             <User size={18} />

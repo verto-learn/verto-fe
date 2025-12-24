@@ -15,6 +15,9 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import UserCourse from "../pages/users/UserCourse";
 import Quiz from "../pages/quiz/Quiz";
 import { Simulator } from "../pages/Simulator";
+import UserAnalytics from "../pages/admin/UserAnalytics";
+import GenerateCourses from "../pages/admin/GenerateCourses";
+import CreateTopics from "../pages/admin/CreateTopics";
 
 
 
@@ -81,7 +84,20 @@ export const router = createBrowserRouter([
                     {
                         path: "profile",
                         element: <Profile />
-                    }
+                    },
+                    {
+                        path: "analytics",
+                        element: <UserAnalytics />
+                    },
+                    {
+                        path: "courses",
+                        element: <GenerateCourses />
+                    },
+                    {
+                        path: "topics",
+                        element: <CreateTopics />
+                    },
+
                 ]
             }
         ]

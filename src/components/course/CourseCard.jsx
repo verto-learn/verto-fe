@@ -11,7 +11,6 @@ export const CourseCard = ({ item }) => {
   return (
     <div className="glass-card p-4 rounded-lg shadow-md">
       <h3 className="text-white text-lg font-semibold truncate">{course.title}</h3>
-      <p className="text-sm text-gray-300 mt-1">Topic: {course.topic ?? "-"}</p>
       <p className="text-sm text-gray-300">Difficulty: {course.difficulty ?? "-"}</p>
 
       <div className="mt-3">

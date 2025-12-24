@@ -11,6 +11,7 @@ const Profile = () => {
   const { data, isLoading, isError } = useGetUserSession();
   const { data: course, isLoading: isCourseLoading } = useGetUserCourse();
   const users = data?.data?.user;
+  const is_admin = users?.role === "admin";
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -60,23 +61,33 @@ const Profile = () => {
         />
       </div>
 
-      <div className="mt-6">
-        <h2 className="text-white text-xl font-semibold mb-4">Your Courses</h2>
+      {!is_admin && (
+        <div className="mt-6">
+          <h2 className="text-white text-xl font-semibold mb-4">
+            Your Courses
+          </h2>
 
-        {isCourseLoading ? (
-          <LoadingSpinner size="md" color="text-indigo-600" />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {course?.data && course.data.length > 0 ? (
-              course.data.map((item) => (
-                <CourseCard key={item.course.id} item={item} />
-              ))
-            ) : (
-              <p className="text-gray-400">You don't have any generated courses yet.</p>
-            )}
-          </div>
-        )}
-      </div>
+          {isCourseLoading ? (
+            <LoadingSpinner size="md" color="text-indigo-600" />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {course?.data && course.data.length > 0 ? (
+                course.data.map((item) => (
+                  <CourseCard
+                    key={item.course?.id}
+                    item={item}
+                  />
+                ))
+              ) : (
+                <p className="text-gray-400">
+                  You don't have any generated courses yet.
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
     </section>
   );
 };
