@@ -2,19 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { X, Send, Bot, User, Loader2 } from "lucide-react";
 import MarkdownContent from "./MarkdownContent";
 import { useChatWithChapter } from "../../hooks/course/useChatWithChapter";
-// Pastikan component ini sudah ada
 
 export const ChatModal = ({ isOpen, onClose, chapterId, chapterTitle }) => {
   const [input, setInput] = useState("");
-  // State pesan awal
-  const [messages, setMessages] = useState([
-    { role: "ai", content: `Halo! Saya siap bantu jelaskan materi tentang **"${chapterTitle}"**. Ada yang mau ditanyakan?` }
-  ]);
-  
+  const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
-  
-  // Panggil hook mutasi
   const { mutate, isPending } = useChatWithChapter();
+  useEffect(() => {
+    setMessages([
+      { 
+        role: "ai", 
+        content: `Halo! Saya siap bantu jelaskan materi tentang **"${chapterTitle}"**. Ada yang mau ditanyakan?` 
+      }
+    ]);
+    setInput("");
+  }, [chapterId, chapterTitle]);
 
   // Auto scroll ke bawah saat ada pesan baru
   useEffect(() => {
@@ -29,16 +31,12 @@ export const ChatModal = ({ isOpen, onClose, chapterId, chapterTitle }) => {
 
     const userQuestion = input;
     
-    // 1. Tambahkan pesan user ke UI
     setMessages((prev) => [...prev, { role: "user", content: userQuestion }]);
     setInput("");
-
-    // 2. Kirim ke API
     mutate(
       { chapterId, question: userQuestion },
       {
         onSuccess: (data) => {
-          // Backend return: { status: "success", data: { answer: "..." } }
           const aiAnswer = data?.data?.answer || "Maaf, saya tidak menemukan jawaban.";
           setMessages((prev) => [...prev, { role: "ai", content: aiAnswer }]);
         },
