@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import TopicForm from '../../components/form/TopicForm'
 import { useTopic } from '../../hooks/topic/useTopic';
+import TopicTable from '../../components/tables/TopicTable';
 
 const CreateTopics = () => {
     const [open, setOpen] = useState(false)
     const { data, isLoading, isError, error } = useTopic();
     const topic = data?.data;
-    const truncateText = (text, maxLength = 80) => {
-        if (!text) return '-'
-        return text.length > maxLength
-            ? text.slice(0, maxLength) + '...'
-            : text
-    }
 
     return (
         <section className='py-12'>
@@ -26,28 +21,22 @@ const CreateTopics = () => {
                 </button>
             </div>
             <div>
-                {isLoading && <p>Loading topics...</p>}
-                {isError && <p className="text-red-500">Error loading topics: {error.message}</p>}
-                {!isLoading && !isError && topic && topic.length === 0 && (
-                    <p>No topics available. Click "Create Topic" to add one.</p>
+                {isLoading && (
+                    <div className="flex items-center justify-center py-20">
+                        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+                        <span className="ml-3 text-gray-400">Loading topics...</span>
+                    </div>
                 )}
-                {!isLoading && !isError && topic && topic.length > 0 && (
-                    <table className='w-full mt-6 overflow-x-auto bg-primary/70 rounded-lg'>
-                        <thead className='bg-primary rounded-lg'>
-                            <tr>
-                                <th className="text-left px-4 py-2">Title</th>
-                                <th className="text-left px-4 py-2">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {topic.map((item) => (
-                                <tr key={item.id}>
-                                    <td className="px-4 py-6 opacity-50">{item.name}</td>
-                                    <td className="px-4 py-6 opacity-50">{truncateText(item.description, 95)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+
+                {isError && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center gap-3 text-red-400">
+                        <AlertCircle className="w-5 h-5" />
+                        <p>Error loading topics: {error?.message || 'Unknown error'}</p>
+                    </div>
+                )}
+
+                {!isLoading && !isError && (
+                    <TopicTable topics={topic} />
                 )}
             </div>
 

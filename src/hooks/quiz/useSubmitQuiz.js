@@ -1,16 +1,22 @@
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import { submit } from "../../api/quiz/submit";
+import { submitQuiz } from "../../api/quiz/submitQuiz";
+
 
 export const useSubmitQuiz = (onSuccessCallback) => {
-  const { mutate, isPending, data, isSuccess, isError, error, reset } = useMutation({
-    mutationFn: (body) => submit(body),
-    onSuccess: (res) => {
-      console.log("✅ Quiz submitted:", res);
-      onSuccessCallback?.(res);
+  
+  const mutation = useMutation({
+    mutationFn: submitQuiz,
+    onSuccess: (data) => {
+      if (onSuccessCallback) {
+        onSuccessCallback(data);
+      }
+      alert("Quiz berhasil dikirim!");
     },
-    onError: (err) => {
-      console.error("❌ Quiz submit failed:", err);
+    onError: (error) => {
+      console.error("Quiz submission failed", error);
+      const msg = error.response?.data?.message || "Gagal mengirim quiz";
+      alert(msg);
     },
   });
 
@@ -20,27 +26,27 @@ export const useSubmitQuiz = (onSuccessCallback) => {
       answers: [], 
     },
     onSubmit: (values) => {
-    
-      const payload = {
-        topicId: values.topicId,
-        answers: values.answers.map((a) => ({
-          questionId: a.questionId,
-          answerIndex: a.answerIndex,
-        })),
-      };
-
-      mutate(payload);
+      // Validasi sederhana
+      if (!values.topicId) {
+        alert("Terjadi kesalahan: Topik tidak ditemukan");
+        return;
+      }
+      if (values.answers.length === 0) {
+        alert("Isi minimal satu jawaban!");
+        return;
+      }
+      
+      // Kirim data ke API
+      mutation.mutate(values);
     },
   });
 
   return {
     formik,
-    mutate,
-    isPending,
-    isSuccess,
-    isError,
-    data,
-    error,
-    reset,
+    submitQuiz: formik.handleSubmit, // Expose fungsi submit formik
+    data: mutation.data,             // Response dari backend (score, assigned_course)
+    isPending: mutation.isPending,
+    isError: mutation.isError,
+    error: mutation.error,
   };
 };

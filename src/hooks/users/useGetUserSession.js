@@ -5,8 +5,8 @@ export const useGetUserSession = (queryOptions = {}) => {
     const { data, isLoading, isError, error } = useQuery({
     queryKey: ["user"],
     queryFn: session,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    cacheTime: 1000 * 60 * 15, // 15 minutes
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 15,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     ...queryOptions,

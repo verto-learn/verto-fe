@@ -8,6 +8,7 @@ import { LoadingSpinner } from "../../components/ui/LoadingSpinner";
 import MarkdownContent from "../../components/course/MarkdownContent";
 import { ChatModal } from "../../components/course/ChatModal";
 import { CompleteChapterButton } from "../../components/course/CompleteChapterButton";
+import { StudyCaseSubmission } from "../../components/course/StudyCaseSubmission";
 
 export const ChapterDetail = () => {
   const { id } = useParams();
@@ -31,12 +32,13 @@ export const ChapterDetail = () => {
   const course = data?.data?.[0]?.course;
   const chapters = course?.chapters || [];
 
- const currentChapterIndex = chapters.findIndex((c) => c.id === id);
+  const currentChapterIndex = chapters.findIndex((c) => c.id === id);
   const chapter = chapters[currentChapterIndex];
   const nextChapter = chapters[currentChapterIndex + 1];
 
   const completedCount = chapters.filter((c) => c.progress?.[0]?.is_done).length;
   const isCurrentChapterDone = chapter?.progress?.[0]?.is_done || false;
+ const studyCaseProof = chapter.study_case_proofs?.[0] || null;
 
   if (!chapter)
     return <div className="text-center text-red-400 mt-10">Chapter tidak ditemukan.</div>;
@@ -48,7 +50,7 @@ export const ChapterDetail = () => {
           className={`flex-1 transition-all duration-500 ${isSidebarOpen ? "md:mr-96" : "md:mr-20"
             }`}
         >
-          <div className="px-6 py-10 max-w-4xl mx-auto pb-32"> 
+          <div className="px-6 py-10 max-w-4xl mx-auto pb-32">
             <div className="flex items-center gap-3 mb-5">
               <Link to="/" className="text-gray-400 hover:text-white">
                 <ArrowLeft size={22} />
@@ -65,11 +67,14 @@ export const ChapterDetail = () => {
             )}
             <MarkdownContent content={chapter.content} />
           </div>
-
+            {chapter.is_study_case && (
+              <StudyCaseSubmission 
+                chapterId={chapter.id} 
+                existingProof={studyCaseProof} 
+              />
+            )}
         </div>
-          
 
-        
         <aside
           className={`fixed right-0 top-0 h-full bg-primary/70 backdrop-blur-lg border-l border-gray-700 shadow-xl transition-all duration-500 ease-in-out z-20 ${isSidebarOpen ? "w-96" : "w-20"
             }`}
@@ -109,21 +114,37 @@ export const ChapterDetail = () => {
         <Sparkles size={24} className="group-hover:rotate-12 transition-transform" />
       </button>
       <div className="mt-10 flex items-center gap-4 justify-center">
-        <CompleteChapterButton isDone={isCurrentChapterDone} />
+        {!chapter.is_study_case && (
+           <CompleteChapterButton isDone={isCurrentChapterDone} />
+        )}
+
+        {chapter.is_study_case && !isCurrentChapterDone && (
+           <div className="px-4 py-2 bg-gray-800 border border-gray-600 rounded-xl text-gray-400 text-sm font-medium flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+              Selesaikan Tugas untuk Lanjut
+           </div>
+        )}
+
+        {chapter.is_study_case && isCurrentChapterDone && (
+           <div className="px-4 py-2 bg-green-900/30 border border-green-500/50 rounded-xl text-green-400 text-sm font-bold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500"></span>
+              Tugas Selesai
+           </div>
+        )}
+        
         {nextChapter && (
-                <button
-                  onClick={() => navigate(`/chapter/${nextChapter.id}`)}
-                  disabled={!isCurrentChapterDone} 
-                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all  justify-center ${
-                    isCurrentChapterDone
-                      ? "bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer"
-                      : "bg-gray-800 text-gray-500 cursor-not-allowed opacity-50"
-                  }`}
-                >
-                  <span className="hidden md:flex">{nextChapter.title}</span>
-                  <ArrowRight size={20} />
-                </button>
-              )}
+          <button
+            onClick={() => navigate(`/chapter/${nextChapter.id}`)}
+            disabled={!isCurrentChapterDone}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all  justify-center ${isCurrentChapterDone
+                ? "bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer"
+                : "bg-gray-800 text-gray-500 cursor-not-allowed opacity-50"
+              }`}
+          >
+            <span className="hidden md:flex">{nextChapter.title}</span>
+            <ArrowRight size={20} />
+          </button>
+        )}
       </div>
       <ChatModal
         key={chapter.id}

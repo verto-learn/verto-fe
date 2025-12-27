@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../hooks/auth/useLogout";
 
 const ProfileCard = ({ user: userProp }) => {
-  // disable fetching when a user prop is passed (avoid duplicate requests)
   const { data, isLoading, isError, error } = useGetUserSession({ enabled: !userProp });
   const { mutate: logout } = useLogout();
   const users = userProp ?? data?.data?.user;

@@ -1,16 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { topic } from "../../api/topic/topic";
+import { getUserStats } from "../../api/users/getUserStats";
 
-
-export const useTopic = () => {
+export const useGetUserStats = () => {
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["topic"],
-        queryFn: topic,
+        queryKey: ["user-stats"],
+        queryFn: getUserStats,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 15,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        onError: (err) => {
+        onError: (err) => {x
             console.error("❌ Error fetching topic:", err); 
         },
     });

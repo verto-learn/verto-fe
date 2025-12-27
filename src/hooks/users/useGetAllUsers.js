@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { topic } from "../../api/topic/topic";
+import { getAllUsers } from "../../api/users/getAllUsers";
 
-
-export const useTopic = () => {
+export const useGetAllUsers = () => {
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ["topic"],
-        queryFn: topic,
+        queryKey: ["all-users"],
+        queryFn: getAllUsers,
         staleTime: 1000 * 60 * 5,
         cacheTime: 1000 * 60 * 15,
         refetchOnWindowFocus: false,

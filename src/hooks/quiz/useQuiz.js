@@ -12,6 +12,10 @@ export const useQuiz = (topicId) => {
     queryKey: ["quiz", topicId], 
     queryFn: () => quiz(topicId), 
     enabled: !!topicId, 
+     staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 15,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
     onError: (err) => {
       console.error("❌ Error fetching quiz:", err);
     },
