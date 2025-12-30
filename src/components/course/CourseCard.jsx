@@ -9,7 +9,7 @@ export const CourseCard = ({ item }) => {
   const total = chapters.length || 0;
 
   return (
-    <div className="glass-card p-4 rounded-lg shadow-md">
+    <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 cursor-pointer hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 relative overflow-hidden">
       <h3 className="text-white text-lg font-semibold truncate">{course.title}</h3>
       <p className="text-sm text-gray-300">Difficulty: {course.difficulty ?? "-"}</p>
 

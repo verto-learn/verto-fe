@@ -19,8 +19,6 @@ const UserAnalytics = () => {
 
   return (
     <section className='py-12 px-4 max-w-7xl mx-auto space-y-8'>
-      
-      {/* 1. Header Section */}
       <div className="flex items-center gap-3">
         <div className="p-3 bg-blue-600/20 rounded-xl">
             <Users className="w-6 h-6 text-blue-500" />
@@ -30,8 +28,6 @@ const UserAnalytics = () => {
             <p className="text-gray-400 text-sm">Overview & Performance Monitoring</p>
         </div>
       </div>
-
-      {/* 2. Stats Grid (Kartu Statistik) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard 
           title="Total Students" 
@@ -44,7 +40,7 @@ const UserAnalytics = () => {
           value={stats.new_users_today || 0} 
           icon={Sparkles} 
           color="green" 
-          trend={stats.new_users_today > 0 ? 100 : 0} // Contoh trend logic
+          trend={stats.new_users_today > 0 ? 100 : 0} 
         />
         <StatCard 
           title="Active Learners" 
@@ -59,15 +55,10 @@ const UserAnalytics = () => {
           color="orange" 
         />
       </div>
-
-      {/* 3. Content Grid: Chart & Table */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        {/* Kolom Kiri: Chart (Lebar 1/3) */}
         <div className="lg:col-span-2">
            <UserChart stats={stats} />
         </div>
-
         <div className="lg:col-span-2">
            <UsersTable users={regularUsers} />
         </div>

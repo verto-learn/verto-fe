@@ -18,6 +18,7 @@ import { Simulator } from "../pages/Simulator";
 import UserAnalytics from "../pages/admin/UserAnalytics";
 import GenerateCourses from "../pages/admin/GenerateCourses";
 import CreateTopics from "../pages/admin/CreateTopics";
+import Leaderboard from "../pages/Leaderboard";
 
 
 
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             {
                 path: "/simulation",
                 element: <Simulator />,
+            },
+            {
+                path: "/leaderboard",
+                element: <Leaderboard />,
             }
             
         ]

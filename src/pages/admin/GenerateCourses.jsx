@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import CourseForm from '../../components/form/CourseForm';
 import { useGetAllCourse } from '../../hooks/course/useGetAllCourse';
 import CourseTable from '../../components/tables/CourseTable';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, BookOpen, Loader2 } from 'lucide-react';
 
 const GenerateCourses = () => {
   const [open, setOpen] = useState(false)
@@ -20,7 +20,15 @@ const GenerateCourses = () => {
   return (
     <section className="py-12">
       <div className='flex justify-between items-center'>
-        <h1 className="text-2xl font-bold mb-6">Generate AI Course</h1>
+        <div className="flex items-center gap-3 mb-8">
+          <div className="p-3 bg-blue-600/20 rounded-xl">
+            <BookOpen className="w-6 h-6 text-blue-500" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white">Generate AI Course</h1>
+            <p className="text-gray-400 text-sm">Create and manage AI-generated courses</p>
+          </div>
+        </div>
         <button
           onClick={() => setOpen(true)}
           className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl"

@@ -14,7 +14,7 @@ const Navbar = () => {
   const items = [
     { name: "Home", link: "/" },
     { name: "Simulation", link: "/simulation" },
-    { name: "Division", link: "/divisi" },
+    { name: "Leaderboard", link: "/leaderboard" },
   ];
 
   const handleMobileLinkClick = () => {

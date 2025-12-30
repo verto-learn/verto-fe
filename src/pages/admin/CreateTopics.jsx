@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TopicForm from '../../components/form/TopicForm'
 import { useTopic } from '../../hooks/topic/useTopic';
 import TopicTable from '../../components/tables/TopicTable';
+import { GraduationCap } from 'lucide-react';
 
 const CreateTopics = () => {
     const [open, setOpen] = useState(false)
@@ -11,7 +12,15 @@ const CreateTopics = () => {
     return (
         <section className='py-12'>
             <div className="flex justify-between items-center mb-8">
-                <h1 className='text-2xl font-bold'>Topics</h1>
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="p-3 bg-blue-600/20 rounded-xl">
+                        <GraduationCap className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-bold text-white">Create Topics</h1>
+                        <p className="text-gray-400 text-sm">Create and manage topics</p>
+                    </div>
+                </div>
 
                 <button
                     onClick={() => setOpen(true)}

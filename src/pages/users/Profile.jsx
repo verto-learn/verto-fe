@@ -27,7 +27,7 @@ const Profile = () => {
 
   return (
     <section className="min-h-screen py-8 px-4 space-y-5">
-      <div className="glass-card px-8 py-6">
+      <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 p-6 rounded-2xl shadow-lg hover:border-gray-600 transition-all duration-300 group">
         <div className="flex items-center gap-8">
           <div className="bg-accent p-3 rounded-full">
             <CircleUser size={28} />
@@ -46,7 +46,7 @@ const Profile = () => {
       </div>
 
 
-      <div className="glass-card px-8 py-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-gray-900/50 backdrop-blur-sm flex flex-col gap-4 border border-gray-700 p-6 rounded-2xl shadow-lg hover:border-gray-600 transition-all duration-300 group ">
         <ProfileInfoCard
           icon={Book}
           title="Role"
