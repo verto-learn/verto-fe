@@ -8,7 +8,7 @@ export const usePublishCourse = () => {
         mutationFn: publishCourse,
         onSuccess: (data) => {
             queryClient.invalidateQueries({
-                queryKey: ["courses"]
+                queryKey: ["allCourses"]
             })
 
             const statusText = data.data.data.is_published ? "Published" : "Hidden";

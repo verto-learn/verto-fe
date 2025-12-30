@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { generateCourse } from "../../api/course/generateCourse";
-import { Bounce } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 export const useGenerateCourse = () => {
     const navigate = useNavigate();
@@ -25,6 +25,7 @@ export const useGenerateCourse = () => {
             console.error("Failed to generate course. Please try again.", err);
         },
         onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["allCourses"] });
             console.log("Course generated successfully!", data);
             toast.success('Course Generated!', {
                 position: "top-right",
